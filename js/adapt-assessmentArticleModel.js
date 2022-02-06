@@ -189,7 +189,9 @@ const AssessmentModel = {
 
     // get random questions from banks
     let questionModels = [];
-    this._questionBanks.forEach(questionBank => {
+
+    for (const bankId in this._questionBanks) { // MOCH
+      const questionBank = this._questionBanks[bankId]; // MOCH
       questionModels.push(...questionBank.getRandomQuestionBlocks());
     });
 
@@ -203,7 +205,8 @@ const AssessmentModel = {
 
   _setupBanks() {
     const assessmentConfig = this.getConfig();
-    const banks = assessmentConfig._banks._split.split(',');
+    const banks = assessmentConfig._banks._split.replace(/\s/g,'').split(','); // MOCH
+    const usesNamedBanks = assessmentConfig._banks._split.includes(':'); // MOCH
     let bankId;
 
     this._questionBanks = [];
@@ -211,8 +214,10 @@ const AssessmentModel = {
     // build fresh banks
     for (let i = 0, l = banks.length; i < l; i++) {
       const bank = banks[i];
-      bankId = (i + 1);
-      const questionBank = new QuestionBank(bankId, this.get('_id'), bank, true);
+      const bankItems = bank.split(':'); // MOCH
+      bankId = usesNamedBanks ? bankItems[0] : i + 1; // MOCH
+      let numQuestionBlocks = usesNamedBanks ? (parseInt(bankItems[1]) || 0) : (parseInt(bankItems[0]) || 0); // MOCH
+      const questionBank = new QuestionBank(bankId, this.get('_id'), numQuestionBlocks, true); // MOCH
 
       this._questionBanks[bankId] = questionBank;
     }
@@ -223,6 +228,7 @@ const AssessmentModel = {
       const blockAssessmentConfig = blockModel.get('_assessment');
       if (!blockAssessmentConfig) continue;
       bankId = blockAssessmentConfig._quizBankID;
+      (usesNamedBanks && !this._questionBanks.hasOwnProperty(bankId)) && (this._questionBanks[bankId] = new QuestionBank(bankId, this.get('_id'), 0, true)); // MOCH
       this._questionBanks[bankId].addBlock(blockModel);
     }
   },
