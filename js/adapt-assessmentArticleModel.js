@@ -193,7 +193,7 @@ const AssessmentModel = {
     for (const bankId in this._questionBanks) { // MOCH
       const questionBank = this._questionBanks[bankId]; // MOCH
       questionModels.push(...questionBank.getRandomQuestionBlocks());
-    });
+    }; // MOCH
 
     // if overall question order should be randomized
     if (assessmentConfig._banks._randomisation) {

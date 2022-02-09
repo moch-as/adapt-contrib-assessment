@@ -281,13 +281,13 @@
               "legend": "Assessment",
               "properties": {
                 "_quizBankID": {
-                  "type": "number",
+                  "type": "string",
                   "required": false,
                   "title": "Bank ID",
-                  "inputType": "Number",
+                  "inputType": "Text",
                   "default": 1,
                   "help": "Used to group blocks of question components into associated banks. This works in conjunction with the 'Split' property when question banks are in use.",
-                  "validators": ["number"],
+                  "validators": [],
                   "editorAttrs": {
                     "step": 1,
                     "min": 1
