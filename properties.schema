@@ -209,7 +209,7 @@
                       "default": "",
                       "inputType": "Text",
                       "validators": [],
-                      "help": "This is a comma-separated list of numbers corresponding to the number of questions to be drawn from each question bank. The position of the number in the list corresponds to the 'Bank ID' assigned, e.g. \"3,2\" would display three questions from Bank 1 and two from Bank 2."
+                      "help": "This is a comma-separated list of numbers corresponding to the number of questions to be drawn from each question bank. The position of the number in the list corresponds to the 'Bank ID' assigned, e.g. \"3,2\" would display three questions from Bank 1 and two from Bank 2. Alternatively, bank names can be used with the number of quesions drawn from each bank, like this: 'bankNameA:1,bankNameB:3,bankNameC:2'."
                     },
                     "_randomisation": {
                       "type": "boolean",
